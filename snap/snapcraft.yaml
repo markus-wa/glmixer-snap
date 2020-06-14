@@ -1,18 +1,41 @@
 name: glmixer-unofficial
 base: core18
-version: '0.1'
+version: '1.7-r1922'
 summary: GLMixer snap because Ubuntu 20.04 doesn't like QT4
 description: |
-  TODO
-grade: devel # must be 'stable' to release into candidate/stable channels
-confinement: devmode # use 'strict' once you have the right plugs and slots
+  GLMixer performs real time graphical blending of several movie clips and of computer generated graphics.
+
+  See https://sourceforge.net/projects/glmixer/ for more info.
+grade: stable
+confinement: strict
+
+plugs:
+  user-config:
+    interface: personal-files
+    read:
+      - $HOME/.config/fontconfig
+    write:
+      - $HOME/.config/user-dirs.dirs
+
+  qt4-config:
+    interface: system-files
+    read:
+    - /etc/xdg/Trolltech.conf
+
+layout:
+  /usr:
+    bind: $SNAP_DATA/usr
+  /lib:
+    bind: $SNAP_DATA/lib
 
 apps:
-  glmixer:
-    command: bin/glmixer
-
   launcher:
-    command: bin/desktop-launch /snap/bin/glmixer-unofficial.glmixer
+    plugs:
+      - user-config
+      - home
+      - desktop
+      - qt4-config
+    command: bin/desktop-launch glmixer
 
 parts:
   desktop-qt4:
@@ -41,7 +64,7 @@ parts:
       - xdg-user-dirs
 
   glmixer:
-    source: "svn://svn.code.sf.net/p/glmixer/Source/trunk"
+    source: svn://svn.code.sf.net/p/glmixer/Source/trunk
     source-type: svn
     plugin: cmake
     configflags:
@@ -71,32 +94,9 @@ parts:
         cp src/glmixer ../install/glmixer
 
     organize:
-      glmixer: bin/glmixer
+      glmixer: usr/bin/glmixer
 
     stage-packages:
-      # - libavcodec57
-      # - libavcodec-extra57
-      # - libavdevice57
-      # - libavfilter6
-      # - libavformat57
-      # - libavutil55
-      # - libc6
-      # - libgcc1
-      # - libgl1
-      # - libglew2.0
-      # - libglu1-mesa
-      # - libopencv-core3.2
-      # - libopencv-videoio3.2
-      # - libqt4-network
-      # - libqt4-opengl
-      # - libqt4-svg
-      # - libqt4-xml
-      # - libqtcore4
-      # - libqtgui4
-      # - libqtwebkit4
-      # - libstdc++6
-      # - libslang2
-      ### below are things logged by snap
       - libasound2
       - libass9
       - libasyncns0
