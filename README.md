@@ -1,5 +1,5 @@
 # glmixer-snap
-GLMixer Snap Image (because it isn't compatible with Ubuntu 20.04)
+GLMixer Snap Image (because the app isn't compatible with Ubuntu 20.04)
 
 ## Install
 
