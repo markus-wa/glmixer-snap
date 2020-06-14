@@ -1,0 +1,238 @@
+name: glmixer-unofficial
+base: core18
+version: '0.1'
+summary: GLMixer snap because Ubuntu 20.04 doesn't like QT4
+description: |
+  TODO
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: devmode # use 'strict' once you have the right plugs and slots
+
+apps:
+  glmixer:
+    command: bin/glmixer
+
+  launcher:
+    command: bin/desktop-launch /snap/bin/glmixer-unofficial.glmixer
+
+parts:
+  desktop-qt4:
+    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
+    source-subdir: qt
+    plugin: make
+    make-parameters: ["FLAVOR=qt4"]
+    build-packages:
+      - build-essential
+      - libqt4-dev
+      - dpkg-dev
+    stage-packages:
+      - libxkbcommon0
+      - ttf-ubuntu-font-family
+      - dmz-cursor-theme
+      - light-themes
+      - adwaita-icon-theme
+      - gnome-themes-standard
+      - shared-mime-info
+      - libqtgui4
+      - libgdk-pixbuf2.0-0
+      - libqt4-svg # for loading icon themes which are svg
+      - appmenu-qt
+      - locales-all
+      - sni-qt
+      - xdg-user-dirs
+
+  glmixer:
+    source: "svn://svn.code.sf.net/p/glmixer/Source/trunk"
+    source-type: svn
+    plugin: cmake
+    configflags:
+      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DCMAKE_INSTALL_PREFIX=/usr
+      - -DCMAKE_BUILD_WITH_INSTALL_RPATH=TRUE
+      - -GNinja
+
+    build-packages:
+      - subversion
+      - cmake-qt-gui
+      - ninja-build
+      - libqt4-opengl-dev
+      - libglew-dev
+      - libavformat-dev
+      - libavfilter-dev
+      - libv4l-dev
+      - xsltproc
+      - libavdevice-dev
+      - libx264-dev
+      - libqtwebkit-dev
+      - build-essential
+
+    override-build: |
+        cmake -G Ninja ../src
+        ninja
+        cp src/glmixer ../install/glmixer
+
+    organize:
+      glmixer: bin/glmixer
+
+    stage-packages:
+      # - libavcodec57
+      # - libavcodec-extra57
+      # - libavdevice57
+      # - libavfilter6
+      # - libavformat57
+      # - libavutil55
+      # - libc6
+      # - libgcc1
+      # - libgl1
+      # - libglew2.0
+      # - libglu1-mesa
+      # - libopencv-core3.2
+      # - libopencv-videoio3.2
+      # - libqt4-network
+      # - libqt4-opengl
+      # - libqt4-svg
+      # - libqt4-xml
+      # - libqtcore4
+      # - libqtgui4
+      # - libqtwebkit4
+      # - libstdc++6
+      # - libslang2
+      ### below are things logged by snap
+      - libasound2
+      - libass9
+      - libasyncns0
+      - libaudio2
+      - libavc1394-0
+      - libavcodec57
+      - libavdevice57
+      - libavfilter6
+      - libavformat57
+      - libavresample3
+      - libavutil55
+      - libbluray2
+      - libbs2b0
+      - libcaca0
+      - libcairo2
+      - libcdio-cdda2
+      - libcdio-paranoia2
+      - libcdio17
+      - libchromaprint1
+      - libcroco3
+      - libcrystalhd3
+      - libdatrie1
+      - libdc1394-22
+      - libdrm2
+      - libfftw3-double3
+      - libflac8
+      - libflite1
+      - libfontconfig1
+      - libfreetype6
+      - libfribidi0
+      - libgdk-pixbuf2.0-0
+      - libgl1
+      - libglew2.0
+      - libglu1-mesa
+      - libglvnd0
+      - libglx0
+      - libgme0
+      - libgomp1
+      - libgraphite2-3
+      - libgsm1
+      - libgstreamer-plugins-base1.0-0
+      - libgstreamer1.0-0
+      - libharfbuzz0b
+      - libice6
+      - libicu60
+      - libiec61883-0
+      - libjack-jackd2-0
+      - libjpeg-turbo8
+      - libmp3lame0
+      - libmpg123-0
+      - libmysofa0
+      - libnorm1
+      - libnuma1
+      - libogg0
+      - libopenal1
+      - libopengl0
+      - libopenjp2-7
+      - libopenmpt0
+      - libopus0
+      - liborc-0.4-0
+      - libpango-1.0-0
+      - libpangocairo-1.0-0
+      - libpangoft2-1.0-0
+      - libpgm-5.2-0
+      - libpixman-1-0
+      - libpng16-16
+      - libpostproc54
+      - libpulse0
+      - libqt4-network
+      - libqt4-opengl
+      - libqt4-svg
+      - libqt4-xml
+      - libqtcore4
+      - libqtgui4
+      - libqtwebkit4
+      - libraw1394-11
+      - librsvg2-2
+      - librubberband2
+      - libsamplerate0
+      - libsdl2-2.0-0
+      - libshine3
+      - libslang2
+      - libsm6
+      - libsnappy1v5
+      - libsndfile1
+      - libsndio6.1
+      - libsodium23
+      - libsoxr0
+      - libspeex1
+      - libssh-gcrypt-4
+      - libswresample2
+      - libswscale4
+      - libthai0
+      - libtheora0
+      - libtwolame0
+      - libusb-1.0-0
+      - libva-drm2
+      - libva-x11-2
+      - libva2
+      - libvdpau1
+      - libvorbis0a
+      - libvorbisenc2
+      - libvorbisfile3
+      - libvpx5
+      - libwavpack1
+      - libwayland-client0
+      - libwayland-cursor0
+      - libwayland-egl1
+      - libwebp6
+      - libwebpmux3
+      - libx11-6
+      - libx264-152
+      - libx265-146
+      - libxau6
+      - libxcb-render0
+      - libxcb-shape0
+      - libxcb-shm0
+      - libxcb-xfixes0
+      - libxcb1
+      - libxcursor1
+      - libxdmcp6
+      - libxext6
+      - libxfixes3
+      - libxi6
+      - libxinerama1
+      - libxkbcommon0
+      - libxml2
+      - libxrandr2
+      - libxrender1
+      - libxslt1.1
+      - libxss1
+      - libxt6
+      - libxv1
+      - libxvidcore4
+      - libxxf86vm1
+      - libzmq5
+      - libzvbi0
+      - freeglut3
+      - libgtk2.0-0
