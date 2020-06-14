@@ -3,7 +3,7 @@ name: Build
 on: push
 
 jobs:
-  my-job:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -13,5 +13,8 @@ jobs:
       - name: Install Snapcraft
         uses: samuelmeuli/action-snapcraft@v1
 
-      - name: Use Snapcraft
+      - name: Set up multipass
+        run: sudo snap install multipass --classic
+
+      - name: Build
         run: snapcraft
