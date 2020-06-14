@@ -14,6 +14,11 @@ GLMixer Snap Image (because the app isn't compatible with Ubuntu 20.04)
     snap install glmixer-unofficial --devmode
 
 
+Afterwards you can run GLMixer with the following command:
+
+    glmixer-unofficial.glmixer
+
+
 ## Build
 
 As you might not want to install someone else's package with `--devmode`, you can build the snap yourself.

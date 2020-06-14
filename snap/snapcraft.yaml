@@ -27,7 +27,7 @@ layout:
     bind: $SNAP_DATA/usr/share
 
 apps:
-  launcher:
+  glmixer:
     plugs:
       - user-config
       - home
