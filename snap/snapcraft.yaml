@@ -23,10 +23,8 @@ plugs:
     - /etc/xdg/Trolltech.conf
 
 layout:
-  /usr:
-    bind: $SNAP_DATA/usr
-  /lib:
-    bind: $SNAP_DATA/lib
+  /usr/share:
+    bind: $SNAP_DATA/usr/share
 
 apps:
   launcher:
@@ -35,6 +33,9 @@ apps:
       - home
       - desktop
       - qt4-config
+      - opengl
+      - x11
+      - removable-media
     command: bin/desktop-launch glmixer
 
 parts:
