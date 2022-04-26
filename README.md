@@ -2,6 +2,11 @@
 
 GLMixer Snap Image (because the app isn't compatible with Ubuntu 20.04)
 
+## Deprecation Notice
+
+### GLMixer has been discontinued by the original author.
+
+### See https://github.com/brunoherbelin/vimix/ for the new project by the same author
 
 ## Install
 
